@@ -1,0 +1,20 @@
+div {
+  display: flex;
+  margin: 1em;
+}
+
+#id {
+  font-family: "Roboto", sans-serif;
+  font-size: 2em;
+}
+
+.class {
+  color: red;
+  color: #008000;
+  color: hsl(240, 100%, 50%);
+}
+.pseudo:after,
+.child:nth-child(1),
+.state:hover {
+  padding: calc();
+}

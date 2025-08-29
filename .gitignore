@@ -1,0 +1,14 @@
+# ignore these folders:
+.vs
+**/bundle/**/bin
+**/bundle/**/obj
+node_modules
+
+# ignore these files:
+nuget.exe
+
+# --------------------
+# include these folders:
+!build
+
+# include these files:

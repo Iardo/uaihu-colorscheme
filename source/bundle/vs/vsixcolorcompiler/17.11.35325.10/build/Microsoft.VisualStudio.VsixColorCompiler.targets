@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+  Use the ** operator to recursively find all .vstheme files in and under the
+  current project directory and add them to the VsTheme item collection.
+  -->
+  <Target BeforeTargets="BeforeBuild"
+          Name="AddVsThemeFile">
+    <ItemGroup>
+      <VsTheme Include="$(MSBuildProjectDirectory)\**\*.vstheme">
+        <Visible>False</Visible>
+      </VsTheme>
+    </ItemGroup>
+  </Target>
+
+  <!--
+  Dynamically add the pkgdef output path (including filename) as metadata to
+  every entry in the VsTheme item collection.
+  -->
+  <Target BeforeTargets="BeforeBuild"
+          Condition="'@(VsTheme)' != ''"
+          DependsOnTargets="AddVsThemeFile"
+          Name="AddVsThemeMetadata">
+    <ItemGroup>
+      <VsTheme>
+        <PkgdefPath>$(OutputPath)%(RecursiveDir)%(Filename).pkgdef</PkgdefPath>
+      </VsTheme>
+    </ItemGroup>
+  </Target>
+
+  <!--
+  Run each .vstheme file through the VSIXColorCompiler using the pkgdef path
+  metadata as the output location. Also make sure to generate the theme
+  registration entries for each .vstheme as part of the pkgdef generation.
+
+  NOTE: Because this task uses the % loop iterator, all the information it
+  consumes needs to be declared in a single item collection or else each loop
+  iterator on each list will run separately and cause the task to run more
+  times than desired. (See AddVsThemeMetadata task.)
+  -->
+  <Target BeforeTargets="BeforeBuild"
+          Condition="'@(VsTheme)' != ''"
+          DependsOnTargets="AddVsThemeMetadata"
+          Name="CompileVsThemeToPkgdef"
+          Outputs="%(VsTheme.Identity)">
+    <Exec Command='"$(MSBuildThisFileDirectory)\..\VsixColorCompiler.exe" "%(VsTheme.FullPath)" "%(VsTheme.PkgdefPath)" /registerTheme' />
+  </Target>
+
+  <!--
+  Add each generated theme pkgdef to the VSIX as VSIXSourceItems. Set the
+  VSIXSubPath to be the same recursive path as the .vstheme file in the project
+  directory.
+
+  NOTE: Because this task uses the % loop iterator, all the information it
+  consumes needs to be declared in a single item collection or else each loop
+  iterator on each list will run separately and cause the task to run more
+  times than desired. (See AddVsThemeMetadata task.)
+  -->
+  <Target BeforeTargets="BeforeBuild"
+          Condition="'@(VsTheme)' != ''"
+          DependsOnTargets="CompileVsThemeToPkgdef"
+          Name="AddVsThemePkgdef"
+          Outputs="%(VsTheme.Identity)">
+    <ItemGroup>
+      <VSIXSourceItem Include="%(VsTheme.PkgdefPath)">
+        <Visible>False</Visible>
+        <VSIXSubPath>%(VsTheme.RecursiveDir)</VSIXSubPath>
+      </VSIXSourceItem>
+    </ItemGroup>
+  </Target>
+
+</Project>

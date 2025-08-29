@@ -1,0 +1,35 @@
+metadata:
+  name: "uaihu"
+
+color:
+  bg_high: "#232530" # highlight
+  bg_main: "#0C0C0C" # background
+  bg_shadow: "#16161C" # shadows
+  border: "#2E303E" # border
+  button: "#2A3EB1" # button
+  diff_modified: "#FAB38E" # diff_modified
+  diff_negative: "#FF6E40" # diff_negative, error
+  diff_positive: "#2ECC71" # diff_positive, link
+  selection: "#2A3EB1" # selection
+  separator: "#6C6F93" # separator
+  symbols: "#FFC107" # keywords, symbols
+  text_blk: "#06060C" # text
+  text_wht: "#FCFCFC" # text
+
+ansi:
+  black:   "#000000"
+  blue:    "#2196F3"
+  cyan:    "#2196F3"
+  green:   "#4CAF50"
+  magenta: "#FF6E40"
+  red:     "#FF6E40"
+  white:   "#FFFFFF"
+  yellow:  "#F1C40F"
+
+alpha:
+  none: "00"
+  low: "1A"
+  medium_low: "4D"
+  medium: "80"
+  medium_high: "B3"
+  high: "E6"

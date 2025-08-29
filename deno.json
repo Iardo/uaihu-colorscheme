@@ -1,0 +1,15 @@
+{
+  "nodeModulesDir": "auto",
+  "tasks": {
+    "build": "deno run --env-file --allow-env --allow-run --allow-net --allow-read=./build,./global,./source,./theme --allow-write=./build,./source/bundle/vscode/themes/uaihu.json,./source/bundle/vs/uaihu.vstheme main.js"
+  },
+  "imports": {
+    "@global/": "./global/",
+    "@std/fs": "jsr:@std/fs@^1.0.10",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "@std/yaml": "jsr:@std/yaml@^1.0.5",
+    "@struct/": "./source/struct/",
+    "@theme/": "./source/theme/",
+    "@vscode/vsce": "npm:@vscode/vsce@^3.6.0"
+  }
+}
