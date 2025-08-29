@@ -1,0 +1,10 @@
+# ignore these folders:
+node_modules
+
+# ignore these files:
+
+# --------------------
+# include these folders:
+!build
+
+# include these files:
